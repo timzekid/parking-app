@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import config from '../config.js';
 
-import Parking           from './Parking.jsx';;
+import Parking           from './Parking.jsx';
 import JoinParkingModal  from './JoinParkingModal.jsx';
 import LeaveParkingModal from './LeaveParkingModal.jsx';
 
@@ -12,7 +12,10 @@ export default class App extends Component {
     state = {
         isJoinParkingModalShown: false,
         isLeaveParkingModalShown: false,
-        carsAmount: { truck: 0, disabled: 0, sedan: 0 }
+        carsAmount: { truck: 0, disabled: 0, sedan: 0 },
+        sedans: [],
+        trucks: [],
+        disabled: []
     };
 
     handleJoinParkingBtnClick = () => {
@@ -24,43 +27,46 @@ export default class App extends Component {
     };
 
     handleCarJoining = (carType) => {
-        const carsAmountUpdatedState = this.state.carsAmount;
+        const updatedAmount = [ ...this.state[carType] ];
 
-        carsAmountUpdatedState[carType] = this.state.carsAmount[carType] + 1;
+        updatedAmount.push({ id: Date.now(), timeOfArrival: new Date().getHours() });
+
+        console.log('carType', carType);
+        console.log('updatedAmount', updatedAmount);
 
         this.setState({
             isJoinParkingModalShown: false,
-            carsAmount: carsAmountUpdatedState
+            [carType]: updatedAmount
         });
     };
 
     handleCarLeaving = (carType) => {
-        const carsAmountUpdatedState = this.state.carsAmount;
+        const updatedAmount = [ ...this.state[carType] ];
 
-        carsAmountUpdatedState[carType] = this.state.carsAmount[carType] - 1;
+        updatedAmount.shift();
 
         this.setState({
             isLeaveParkingModalShown: false,
-            carsAmount: carsAmountUpdatedState
+            [carType]: updatedAmount
         });
     };
 
     getFreePlaces = () => {
         const {
-            truck,
+            trucks,
             disabled,
-            sedan
-        } = this.state.carsAmount;
+            sedans
+        } = this.state;
 
-        return config.totalPlaces - truck - disabled - sedan;
+        return config.totalPlaces - trucks.length - disabled.length - sedans.length;
     };
 
     getFreeTruckPlaces = () => {
-        return config.truksPlacesMaximum - this.state.carsAmount.truck;
+        return config.trucksPlacesMaximum - this.state.trucks.length;
     };
 
     getFreeDisabledPlaces = () => {
-        return config.disabledPlacesMaximum - this.state.carsAmount.disabled;
+        return config.disabledPlacesMaximum - this.state.disabled.length;
     };
 
     checkCanSedanJoinParking = () => {
@@ -76,20 +82,20 @@ export default class App extends Component {
     };
 
     checkCanSedanLeaveParking = () => {
-        return this.state.carsAmount.sedan > 0;
+        return this.state.sedans.length > 0;
     };
 
     checkCanTruckLeaveParking = () => {
-        return this.state.carsAmount.truck > 0;
+        return this.state.trucks.length > 0;
     };
 
     checkCanDisabledLeaveParking = () => {
-        return this.state.carsAmount.disabled > 0;
+        return this.state.disabled.length > 0;
     };
 
     render() {
         const {
-            truksPlacesMaximum,
+            trucksPlacesMaximum,
             disabledPlacesMaximum,
             totalPlaces
         } = config;
@@ -102,17 +108,17 @@ export default class App extends Component {
         const canTruckLeaveParking = this.checkCanTruckLeaveParking();
         const canDisabledLeaveParking = this.checkCanDisabledLeaveParking();
 
-        console.log('canTruckLeaveParking', canTruckLeaveParking);
-
         return (
             <div className={styles.app} id='app'>
                 <div onClick={this.handleJoinParkingBtnClick}>Join parking</div>
                 <div onClick={this.handleLeaveParkingBtnClick}>Leave parking</div>
                 <Parking
-                    truksPlacesMaximum={truksPlacesMaximum}
+                    trucksPlacesMaximum={trucksPlacesMaximum}
                     disabledPlacesMaximum={disabledPlacesMaximum}
                     totalPlaces={totalPlaces}
-                    carsAmount={this.state.carsAmount}
+                    trucks={this.state.trucks}
+                    sedans={this.state.sedans}
+                    disabled={this.state.disabled}
                 />
 
                 {

@@ -1,5 +1,5 @@
 var APP_CONFIG = {
-    truksPlacesMaximum: 10,
+    trucksPlacesMaximum: 10,
     disabledPlacesMaximum: 5,
     totalPlaces: 30
 };
