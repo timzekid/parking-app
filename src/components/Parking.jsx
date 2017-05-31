@@ -22,9 +22,9 @@ export default class Parking extends Component {
                 <div>Maximum places for trucks: {trucksPlacesMaximum}</div>
                 <div>Maximum places for disabled: {disabledPlacesMaximum}</div>
                 <div>Total places: {totalPlaces}</div>
-                <div>Trucks amount: {trucks.length}</div>
-                <div>Disabled amount: {disabled.length}</div>
-                <div>Sedans amount: {sedans.length}</div>
+                <div className={styles.trucksAmount}>Trucks amount: {trucks.length}</div>
+                <div className={styles.disabledAmount}>Disabled amount: {disabled.length}</div>
+                <div className={styles.sedansAmount}>Sedans amount: {sedans.length}</div>
                 {
                     trucks.map(truck => {
                         return (

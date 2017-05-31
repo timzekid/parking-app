@@ -33,7 +33,7 @@ export default class JoinParkingModal extends Component {
 
         return (
             <div className={styles.modal}>
-                <h3>What type of car do you have?</h3>
+                <h3>Welcome. What type of car do you have?</h3>
                 <div
                     className={truckBtnClasses}
                     onClick={

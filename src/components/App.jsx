@@ -111,12 +111,20 @@ export default class App extends Component {
         const canTruckLeaveParking = this.checkCanTruckLeaveParking();
         const canDisabledLeaveParking = this.checkCanDisabledLeaveParking();
 
-        console.log('this.state', this.state);
-
         return (
             <div className={styles.app} id='app'>
-                <div onClick={this.handleJoinParkingBtnClick}>Join parking</div>
-                <div onClick={this.handleLeaveParkingBtnClick}>Leave parking</div>
+                <div
+                    className={styles.joinBtn}
+                    onClick={this.handleJoinParkingBtnClick}
+                >
+                    Join parking
+                </div>
+                <div
+                    className={styles.leaveBtn}
+                    onClick={this.handleLeaveParkingBtnClick}
+                >
+                    Leave parking
+                </div>
                 <Parking
                     trucksPlacesMaximum={trucksPlacesMaximum}
                     disabledPlacesMaximum={disabledPlacesMaximum}

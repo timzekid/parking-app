@@ -33,7 +33,7 @@ export default class LeaveParkingModal extends Component {
 
         return (
             <div className={styles.modal}>
-                <h3>What type of car have you left here?</h3>
+                <h3>Good bye. What type of car have you left here?</h3>
                 <div
                     className={truckBtnClasses}
                     onClick={
