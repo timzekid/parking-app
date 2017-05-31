@@ -18,6 +18,22 @@ export default class App extends Component {
         disabled: []
     };
 
+    componentDidMount() {
+        const localSedansInfo = JSON.parse(localStorage.getItem('sedans'));
+        const localTrucksInfo = JSON.parse(localStorage.getItem('trucks'));
+        const localDisabledInfo = JSON.parse(localStorage.getItem('disabled'));
+
+        if (localSedansInfo) {
+            this.setState({ sedans: localSedansInfo });
+        }
+        if (localTrucksInfo) {
+            this.setState({ trucks: localTrucksInfo });
+        }
+        if (localDisabledInfo) {
+            this.setState({ disabled: localDisabledInfo });
+        }
+    }
+
     handleJoinParkingBtnClick = () => {
         this.setState({ isJoinParkingModalShown: true });
     };
@@ -37,7 +53,7 @@ export default class App extends Component {
         this.setState({
             isJoinParkingModalShown: false,
             [carType]: updatedAmount
-        });
+        }, this._updateLocalStorage);
     };
 
     handleCarLeaving = (carType) => {
@@ -48,7 +64,7 @@ export default class App extends Component {
         this.setState({
             isLeaveParkingModalShown: false,
             [carType]: updatedAmount
-        });
+        }, this._updateLocalStorage);
     };
 
     getFreePlaces = () => {
@@ -93,6 +109,16 @@ export default class App extends Component {
 
     checkCanDisabledLeaveParking = () => {
         return this.state.disabled.length > 0;
+    };
+
+    _updateLocalStorage = () => {
+        const sedans = JSON.stringify(this.state.sedans);
+        const trucks = JSON.stringify(this.state.trucks);
+        const disabled = JSON.stringify(this.state.disabled);
+
+        localStorage.setItem('sedans', sedans);
+        localStorage.setItem('trucks', trucks);
+        localStorage.setItem('disabled', disabled);
     };
 
     render() {
