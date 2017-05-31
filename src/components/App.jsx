@@ -63,7 +63,9 @@ export default class App extends Component {
     };
 
     getFreeTruckPlaces = () => {
-        return config.trucksPlacesMaximum - this.state.trucks.length;
+        if (config.trucksPlacesMaximum === this.state.trucks.length) return 0;
+
+        return this.getFreePlaces() - this.state.sedans.length + this.state.disabled.length;
     };
 
     getFreeDisabledPlaces = () => {
@@ -71,7 +73,7 @@ export default class App extends Component {
     };
 
     checkCanSedanJoinParking = () => {
-        return this.getFreePlaces() - config.disabledPlacesMaximum > 0;
+        return this.getFreePlaces() - this.getFreeDisabledPlaces() > 0;
     };
 
     checkCanTruckJoinParking = () => {
@@ -108,6 +110,8 @@ export default class App extends Component {
         const canSedanLeaveParking = this.checkCanSedanLeaveParking();
         const canTruckLeaveParking = this.checkCanTruckLeaveParking();
         const canDisabledLeaveParking = this.checkCanDisabledLeaveParking();
+
+        console.log('this.state', this.state);
 
         return (
             <div className={styles.app} id='app'>
