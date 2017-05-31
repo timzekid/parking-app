@@ -28,12 +28,46 @@ export default class App extends Component {
         });
     };
 
+    getFreePlaces = () => {
+        const {
+            truck,
+            disabled,
+            sedan
+        } = this.state.carsAmount;
+
+        return config.totalPlaces - truck - disabled - sedan;
+    };
+
+    getFreeTruckPlaces = () => {
+        return config.truksPlacesMaximum - this.state.carsAmount.truck;
+    };
+
+    getFreeDisabledPlaces = () => {
+        return config.disabledPlacesMaximum - this.state.carsAmount.disabled;
+    };
+
+    checkCanSedanJoinParking = () => {
+        return this.getFreePlaces() - config.disabledPlacesMaximum > 0;
+    };
+
+    checkCanTruckJoinParking = () => {
+        return this.getFreeTruckPlaces() > 0;
+    };
+
+    checkCanDisabledJoinParking = () => {
+        return this.getFreePlaces() > 0;
+    };
+
     render() {
         const {
             truksPlacesMaximum,
             disabledPlacesMaximum,
             totalPlaces
         } = config;
+
+        const canSedanJoingParking = this.checkCanSedanJoinParking();
+        const canTruckJoingParking = this.checkCanTruckJoinParking();
+        const canDisabledJoingParking = this.checkCanDisabledJoinParking();
 
         return (
             <div className={styles.app} id='app'>
@@ -42,6 +76,7 @@ export default class App extends Component {
                     truksPlacesMaximum={truksPlacesMaximum}
                     disabledPlacesMaximum={disabledPlacesMaximum}
                     totalPlaces={totalPlaces}
+                    carsAmount={this.state.carsAmount}
                 />
 
                 {

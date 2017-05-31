@@ -7,7 +7,8 @@ export default class Parking extends Component {
         const {
             truksPlacesMaximum,
             disabledPlacesMaximum,
-            totalPlaces
+            totalPlaces,
+            carsAmount
         } = this.props;
 
         return (
@@ -15,6 +16,9 @@ export default class Parking extends Component {
                 <div>Maximum places for truks: {truksPlacesMaximum}</div>
                 <div>Maximum places for disabled: {disabledPlacesMaximum}</div>
                 <div>Total places: {totalPlaces}</div>
+                <div>Trucks amount: {carsAmount.truck}</div>
+                <div>Disabled amount: {carsAmount.disabled}</div>
+                <div>Sedans amount: {carsAmount.sedan}</div>
             </div>
         );
     }
