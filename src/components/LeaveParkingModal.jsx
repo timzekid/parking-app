@@ -14,14 +14,21 @@ export default class LeaveParkingModal extends Component {
     };
 
     render() {
+        const {
+            canTruckLeaveParking,
+            canSedanLeaveParking,
+            canDisabledLeaveParking,
+            onCarTypeSelect
+        } = this.props;
+
         const truckBtnClasses = cx(styles.carTypeBtn, {
-            [styles.carTypeBtnDisabled]: !this.props.canTruckLeaveParking
+            [styles.carTypeBtnDisabled]: !canTruckLeaveParking
         });
         const sedanBtnClasses = cx(styles.carTypeBtn, {
-            [styles.carTypeBtnDisabled]: !this.props.canSedanLeaveParking
+            [styles.carTypeBtnDisabled]: !canSedanLeaveParking
         });
         const disabledBtnClasses = cx(styles.carTypeBtn, {
-            [styles.carTypeBtnDisabled]: !this.props.canDisabledLeaveParking
+            [styles.carTypeBtnDisabled]: !canDisabledLeaveParking
         });
 
         return (
@@ -29,19 +36,37 @@ export default class LeaveParkingModal extends Component {
                 <h3>What type of car have you left here?</h3>
                 <div
                     className={truckBtnClasses}
-                    onClick={this.props.onCarTypeSelect.bind(null, labels.TRUCK_CAR_LABEL)}
+                    onClick={
+                        canTruckLeaveParking
+                        ?
+                            onCarTypeSelect.bind(null, labels.TRUCK_CAR_LABEL)
+                        :
+                            null
+                        }
                 >
                     Truck
                 </div>
                 <div
                     className={sedanBtnClasses}
-                    onClick={this.props.onCarTypeSelect.bind(null, labels.SEDAN_CAR_LABEL)}
+                    onClick={
+                        canSedanLeaveParking
+                        ?
+                            onCarTypeSelect.bind(null, labels.SEDAN_CAR_LABEL)
+                        :
+                            null
+                        }
                 >
                     Sedan
                 </div>
                 <div
                     className={disabledBtnClasses}
-                    onClick={this.props.onCarTypeSelect.bind(null, labels.DISABLED_CAR_LABEL)}
+                    onClick={
+                        canDisabledLeaveParking
+                        ?
+                            onCarTypeSelect.bind(null, labels.DISABLED_CAR_LABEL)
+                        :
+                            null
+                        }
                 >
                     I am disabled person
                 </div>
