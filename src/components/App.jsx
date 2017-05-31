@@ -13,7 +13,6 @@ export default class App extends Component {
     state = {
         isJoinParkingModalShown: false,
         isLeaveParkingModalShown: false,
-        carsAmount: { truck: 0, disabled: 0, sedan: 0 },
         sedans: [],
         trucks: [],
         disabled: []
