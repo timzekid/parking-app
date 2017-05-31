@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment               from 'moment';
 
 import config from '../config.js';
 
@@ -29,10 +30,10 @@ export default class App extends Component {
     handleCarJoining = (carType) => {
         const updatedAmount = [ ...this.state[carType] ];
 
-        updatedAmount.push({ id: Date.now(), timeOfArrival: new Date().getHours() });
-
-        console.log('carType', carType);
-        console.log('updatedAmount', updatedAmount);
+        updatedAmount.push({
+            id: Date.now(),
+            timeOfArrival: moment(new Date()).format('h:mm:ss')
+        });
 
         this.setState({
             isJoinParkingModalShown: false,

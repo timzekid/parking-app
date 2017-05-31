@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import * as labels from '../constants/Labels.js';
+
+import Car from './Car.jsx';
+
 import styles from './Parking.less';
 
 export default class Parking extends Component {
@@ -22,7 +26,37 @@ export default class Parking extends Component {
                 <div>Disabled amount: {disabled.length}</div>
                 <div>Sedans amount: {sedans.length}</div>
                 {
-
+                    trucks.map(truck => {
+                        return (
+                            <Car
+                                id = {truck.id}
+                                timeOfArrival = {truck.timeOfArrival}
+                                type={labels.TRUCK_CAR_LABEL}
+                            />
+                        );
+                    })
+                }
+                {
+                    disabled.map(disabledCar => {
+                        return (
+                            <Car
+                                id = {disabledCar.id}
+                                timeOfArrival = {disabledCar.timeOfArrival}
+                                type={labels.DISABLED_CAR_LABEL}
+                            />
+                        );
+                    })
+                }
+                {
+                    sedans.map(sedan => {
+                        return (
+                            <Car
+                                id = {sedan.id}
+                                timeOfArrival = {sedan.timeOfArrival}
+                                type={labels.SEDAN_CAR_LABEL}
+                            />
+                        );
+                    })
                 }
             </div>
         );
