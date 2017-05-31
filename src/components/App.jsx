@@ -82,7 +82,12 @@ export default class App extends Component {
                 {
                     this.state.isJoinParkingModalShown
                     ?
-                        <JoinParkingModal onCarTypeSelect={this.handleCarJoining} />
+                        <JoinParkingModal
+                            canSedanJoingParking={canSedanJoingParking}
+                            canTruckJoingParking={canTruckJoingParking}
+                            canDisabledJoingParking={canDisabledJoingParking}
+                            onCarTypeSelect={this.handleCarJoining}
+                        />
                     :
                         null
                 }
